@@ -13,6 +13,7 @@ class Service
     public $networkId;
     public $serviceType; // 1: TV, 2: Radio, 25: HDTV, other:data
     public $hmm2;
+    public $channelId;
 
     public function getKey()
     {

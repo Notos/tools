@@ -105,6 +105,7 @@ class LameDb4 extends LameDb
         $service->l1 = $l1;
         $service->l3 = $l3;
         $service->data = $data;
+        $service->channelId = strtoupper("1:0:1:{$service->lsid}:{$service->ltransporterId}:{$service->lnetworkId}:{$service->namespace}:0:0:0");
 
         $service->filenames = [
             str_replace(' ', '', 'canal'.strtolower($name1 = $this->normalizeName($service->name, true))).'.png' => str_replace(' ', '', 'canal'.strtolower($name1 = $this->normalizeName($service->name, true))).'.png',
@@ -112,7 +113,7 @@ class LameDb4 extends LameDb
         ];
 
         $service->enigma2Filenames = [
-            strtoupper("1_0_1_{$service->lsid}_{$service->ltransporterId}_{$service->lnetworkId}_{$service->namespace}_0_0_0").'.png' => strtoupper("1_0_1_{$service->lsid}_{$service->ltransporterId}_{$service->lnetworkId}_{$service->namespace}_0_0_0").'.png',
+            str_replace(':', '_', $service->channelId).'.png' => strtoupper("1_0_1_{$service->lsid}_{$service->ltransporterId}_{$service->lnetworkId}_{$service->namespace}_0_0_0").'.png',
         ];
 
         $service->shieldFilenames = [

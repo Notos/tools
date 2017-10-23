@@ -1,7 +1,9 @@
 <?php
 
-use App\Services\LameDb\LameDb;
-
-Route::get('/', function () {
+Route::get('/lame', function () {
     Artisan::call('tools:lame');
+});
+
+Route::get('/m3u', function () {
+    Artisan::call('tools:m3u');
 });

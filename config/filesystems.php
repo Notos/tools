@@ -48,6 +48,11 @@ return [
             'root' => storage_path('app'),
         ],
 
+        'm3u' => [
+            'driver' => 'local',
+            'root' => storage_path('m3u'),
+        ],
+
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
