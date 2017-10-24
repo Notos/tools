@@ -29,4 +29,16 @@ class Constants
             'base_url' => 'http://an4tools.esy.es/Logos/Xpicons%20(220x132)',
         ],
     ];
+
+    const EXPORTERS = [
+        'm3u' => [
+            'id' => 'm3u',
+            'name' => 'M3U',
+        ],
+
+        'csv' => [
+            'id' => 'csv',
+            'name' => 'CSV',
+        ],
+    ];
 }

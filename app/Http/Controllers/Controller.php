@@ -15,8 +15,6 @@ class Controller extends BaseController
 
     public function storeRequest($type, Request $request)
     {
-        Session::forget($key = 'req-'.$type);
-
-        Session::put($key, $request->all());
+        Session::put($key = 'req-'.$type, $request->all());
     }
 }
