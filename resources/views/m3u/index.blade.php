@@ -12,8 +12,8 @@
                         {{ csrf_field() }}
 
                         <div class="form-group">
-                            <label for="exampleInputEmail1">Host</label>
-                            <input class="form-control" name="m3u_host" placeholder="Host url" value="{{ $m3u_host }}">
+                            <label for="exampleInputEmail1">Server url & port</label>
+                            <input class="form-control" name="m3u_host" placeholder="ex: http://172.17.0.114:8001" value="{{ $m3u_host }}">
                         </div>
 
                         <div class="form-group">
