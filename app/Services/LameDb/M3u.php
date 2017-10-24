@@ -8,18 +8,52 @@ class M3u
 {
     protected $disk = 'm3u';
 
+    private function generateCsvFile($request)
+    {
+        $host = $request->get('m3u_host');
+
+        $file = ['Class,Name,URL,Image'];
+
+        collect($this->lameDbFactory($request)->getServices())->filter(function ($service) {
+            return trim($service->name) != '';
+        })->map(function($service) {
+            $service->channel = hexdec($service->lsid);
+
+            $service->title = "{$service->channel} - {$service->name}";
+
+            return $service;
+        })->sortBy(function ($service) {
+            return $service->channel;
+        })->each(function ($service) use ($request, &$file, $host) {
+            $file[] = "IPTV,{$service->title},{$host}/{$service->channelId}:,";
+        });
+
+        return implode("\n", $file);
+    }
+
     /**
      * @param \Illuminate\Http\Request $request
      * @return string
      */
     public function lamedb2M3u($request)
     {
-        Storage::disk($this->disk)->put($file = 'channels.m3u', $this->generateFile($request));
+        Storage::disk($this->disk)->put($file = 'channels.m3u', $this->generateM3uFile($request));
 
         return storage_path("{$this->disk}/{$file}");
     }
 
-    private function generateFile($request)
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return string
+     */
+    public function lamedb2csv($request)
+    {
+        Storage::disk($this->disk)->put($file = 'channels.m3u', $this->generateCsvFile($request));
+
+        return storage_path("{$this->disk}/{$file}");
+    }
+
+    private function generateM3uFile($request)
     {
         $host = $request->get('m3u_host');
 
