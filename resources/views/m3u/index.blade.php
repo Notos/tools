@@ -13,7 +13,7 @@
 
                         <div class="form-group">
                             <label for="exampleInputEmail1">Server url & port</label>
-                            <input class="form-control" name="m3u_host" placeholder="ex: http://172.17.0.114:8001" value="{{ $m3u_host }}">
+                            <input class="form-control" name="m3u_host" placeholder="ex: http://192.168.1.10:8001" value="{{ $m3u_host }}">
                         </div>
 
                         <div class="form-group">
