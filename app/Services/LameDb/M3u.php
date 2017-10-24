@@ -2,6 +2,7 @@
 
 namespace App\Services\LameDb;
 
+use App\Services\Constants;
 use Illuminate\Support\Facades\Storage;
 
 class M3u
@@ -11,6 +12,7 @@ class M3u
     private function generateCsvFile($request)
     {
         $host = $request->get('m3u_host');
+        $picons = Constants::PICONS[$request->get('picons')];
 
         $file = ['Class,Name,URL,Image'];
 
@@ -24,8 +26,10 @@ class M3u
             return $service;
         })->sortBy(function ($service) {
             return $service->channel;
-        })->each(function ($service) use ($request, &$file, $host) {
-            $file[] = "IPTV,{$service->title},{$host}/{$service->channelId}:,";
+        })->each(function ($service) use ($request, &$file, $host, $picons) {
+            $picon = reset($service->filenames);
+
+            $file[] = "IPTV,{$service->title},{$host}/{$service->channelId}:,{$picons['base_url']}/{$picon}";
         });
 
         return implode("\n", $file);

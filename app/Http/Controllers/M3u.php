@@ -7,17 +7,27 @@ use App\Services\LameDb\M3u as M3uService;
 
 class M3u extends Controller
 {
-    public function lamedb2m38(M3uRequest $request, M3uService $m3u)
+    /**
+     * @param $method
+     * @param M3uRequest $request
+     * @return \Symfony\Component\HttpFoundation\BinaryFileResponse
+     */
+    protected function convert($method, M3uRequest $request)
     {
+        $m3u = new M3uService;
+
         $this->storeRequest('lamedb2m3u', $request);
 
-        return response()->download($m3u->lamedb2M3u($request), 'channels.m3u');
+        return response()->download($m3u->{$method}($request), 'channels.m3u');
     }
 
-    public function lamedb2csv(M3uRequest $request, M3uService $m3u)
+    public function lamedb2m38(M3uRequest $request)
     {
-        $this->storeRequest('lamedb2csv', $request);
+        return $this->convert('lamedb2M3u', $request);
+    }
 
-        return response()->download($m3u->lamedb2csv($request), 'channels.csv');
+    public function lamedb2csv(M3uRequest $request)
+    {
+        return $this->convert('lamedb2csv', $request);
     }
 }

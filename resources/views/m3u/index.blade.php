@@ -28,7 +28,7 @@
         </div>
 
         <div class="col-4">
-            <div class="card" style="width: 20rem;">
+            <div class="card">
                 <div class="card-header">
                     LameDB to .csv
                 </div>
@@ -39,6 +39,15 @@
                         <div class="form-group">
                             <label for="exampleInputEmail1">Server url & port</label>
                             <input class="form-control" name="m3u_host" placeholder="ex: http://192.168.1.10:8001" value="{{ $m3u_host }}">
+                        </div>
+
+                        <div class="form-group">
+                            <label for="exampleFormControlSelect1">Picons</label>
+                            <select class="form-control" id="exampleFormControlSelect1" name="picons">
+                                @foreach ($picons as $picon)
+                                    <option value="{{ $picon['id'] }}">{{ $picon['name'] }}</option>
+                                @endforeach
+                            </select>
                         </div>
 
                         <div class="form-group">
