@@ -6,39 +6,61 @@ use Illuminate\Support\Facades\Storage;
 
 class M3u
 {
-    /**
-     *
-     */
-    public function createAll()
-    {
-        $lameDb = LameDb::factoryFromFile(database_path('lamedb'));
+    protected $disk = 'm3u';
 
-        collect($lameDb->getServices())->each(function ($service, $key) {
-            if (trim($service->name) != '') {
-                Storage::disk('m3u')->put($this->makeFilename($service), $this->generateFile($service, $key));
-            }
-        });
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return string
+     */
+    public function lamedb2M3u($request)
+    {
+        Storage::disk($this->disk)->put($file = 'channels.m3u', $this->generateFile($request));
+
+        return storage_path("{$this->disk}/{$file}");
     }
 
-    private function generateFile($service, $key)
+    private function generateFile($request)
     {
-        $contents = file_get_contents(__DIR__.'/m3u.stub');
+        $host = $request->get('m3u_host');
 
-        $search = [
-            '{channel-name}',
-            '{channel-number}',
-            '{host}',
-            '{channel-id}',
-        ];
+        $file = ['#EXTM3U'];
 
-        $replace = [
-            $service->name,
-            hexdec($service->lsid),
-            'http://172.17.0.114:8001',
-            $service->channelId,
-        ];
+        collect($this->lameDbFactory($request)->getServices())->filter(function ($service) {
+            return trim($service->name) != '';
+        })->map(function($service) {
+            $service->channel = hexdec($service->lsid);
 
-        return str_replace($search, $replace, $contents);
+            $service->title = "{$service->channel} - {$service->name}";
+
+            return $service;
+        })->sortBy(function ($service) {
+            return $service->channel;
+        })->each(function ($service) use ($request, &$file, $host) {
+            $file[] = '';
+
+            $file[] = "#EXTINF:-1,{$service->title}";
+
+            $file[] = "#EXTVLCOPT:program={$service->channel}";
+
+            $file[] = '#EXTVLCOPT--http-reconnect=true';
+
+            $file[] = "#EXTVLCOPT:meta-title={$service->title}";
+
+            $file[] = "{$host}/{$service->channelId}:";
+        });
+
+        return implode("\n", $file);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @return LameDb
+     */
+    protected function lameDbFactory($request)
+    {
+        $file = $this->storeLameDbFile($request);
+
+        return LameDb::factoryFromFile(storage_path("m3u/db/{$file}"));
     }
 
     private function makeFilename($service)
@@ -52,6 +74,17 @@ class M3u
         );
 
         return "{$name}.m3u";
+    }
+
+    /**
+     * @param $request
+     * @return string
+     */
+    protected function storeLameDbFile($request)
+    {
+        $request->lamedb->storeAs('db', $file = 'lamedb.txt', $this->disk);
+
+        return $file;
     }
 
     public function stripAccents($stripAccents){

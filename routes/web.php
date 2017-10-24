@@ -1,9 +1,11 @@
 <?php
 
-Route::get('/lame', function () {
-    Artisan::call('tools:lame');
+Route::get('/', 'Home@index');
+
+Route::group(['prefix' => 'tools'], function () {
+    Route::get('/', 'Tools@index');
 });
 
-Route::get('/m3u', function () {
-    Artisan::call('tools:m3u');
+Route::group(['prefix' => 'm3u'], function () {
+    Route::post('/lamedb2m38', 'M3u@lamedb2m38');
 });
