@@ -24,7 +24,7 @@ class M3u extends FormRequest
     public function rules()
     {
         return [
-            'lamedb_host' => 'required',
+            'lamedb_host' => 'required|url',
             'lamedb_file' => 'required|file',
         ];
     }

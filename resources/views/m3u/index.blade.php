@@ -33,7 +33,7 @@
 
                                 <div class="form-group">
                                     <label for="lamedb_group">Group</label>
-                                    <input class="form-control" name="lamedb_group" placeholder="ex: http://192.168.1.10:8001" value="{{ $lamedb_group }}">
+                                    <input class="form-control" name="lamedb_group" placeholder="ex: http://192.168.1.10:8001" value="{{ $lamedb_group ?: old('lamedb_group') }}">
                                 </div>
 
                                 <div class="form-group">
@@ -45,17 +45,17 @@
                             <div class="col-6">
                                 <div class="form-group">
                                     <label for="lamedb_host">Service url & port</label>
-                                    <input class="form-control" name="lamedb_host" placeholder="ex: http://192.168.1.10:8001" value="{{ $lamedb_host }}">
+                                    <input class="form-control" name="lamedb_host" placeholder="ex: http://192.168.1.10:8001" value="{{ $lamedb_host ?: old('lamedb_host') }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="username">Username</label>
-                                    <input class="form-control" name="lamedb_username" placeholder="service username (optional)" value="{{ $lamedb_username }}">
+                                    <input class="form-control" name="lamedb_username" placeholder="service username (optional)" value="{{ $lamedb_username ?: old('lamedb_username') }}">
                                 </div>
 
                                 <div class="form-group">
                                     <label for="password">Password</label>
-                                    <input class="form-control" name="lamedb_password" placeholder="service password (optional)" value="{{ $lamedb_password }}">
+                                    <input class="form-control" name="lamedb_password" placeholder="service password (optional)" value="{{ $lamedb_password ?: old('lamedb_password') }}">
                                 </div>
                             </div>
                         </div>
