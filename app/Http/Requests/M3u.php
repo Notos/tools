@@ -25,7 +25,19 @@ class M3u extends FormRequest
     {
         return [
             'lamedb_host' => 'required|url',
-            'lamedb_file' => 'required|file',
+            'lamedb_file' => 'required|file|lamedb',
+        ];
+    }
+
+    public function validateLamedb()
+    {
+        return false;
+    }
+
+    public function messages()
+    {
+        return [
+            'lamedb' => 'Invalid LameDB file',
         ];
     }
 }
