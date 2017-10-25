@@ -15,6 +15,8 @@ class Controller extends BaseController
 
     public function storeRequest($type, Request $request)
     {
-        Session::put($key = 'req-'.$type, $request->all());
+        $input = $request->except('lamed_file');
+
+        Session::put($key = 'req-'.$type, $input);
     }
 }
