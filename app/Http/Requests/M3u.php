@@ -26,6 +26,7 @@ class M3u extends FormRequest
         return [
             'lamedb_host' => 'required|url',
             'lamedb_file' => 'required|file|lamedb',
+            'lamedb_group' => 'required',
         ];
     }
 
