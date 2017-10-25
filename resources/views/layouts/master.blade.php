@@ -21,7 +21,7 @@
                 <a class="navbar-brand" href="#">Notos Tools</a>
             </nav>
 
-            <main role="main" class="container">
+            <main role="main" class="container-fluid">
 
                 @if ($errors->any())
                     <div class="alert alert-danger">

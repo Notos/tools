@@ -2,9 +2,9 @@
 
 @section('contents')
     <div class="row">
-        <div class="col-8">
+        <div class="col-12">
             <div class="card">
-                <div class="card-header">
+                <div class="card-header bg-primary text-white">
                     LameDB Exporter (m3u & csv)
                 </div>
                 <div class="card-body">
