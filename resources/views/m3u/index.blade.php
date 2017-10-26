@@ -8,7 +8,7 @@
                     LameDB Exporter (m3u & csv)
                 </div>
                 <div class="card-body">
-                    <form action="/lamedb/export" method="POST" enctype="multipart/form-data">
+                    <form id="lamedb" action="/lamedb/export" method="POST" enctype="multipart/form-data">
                         {{ csrf_field() }}
 
                         <div class="row">
@@ -61,10 +61,8 @@
                         </div>
 
                         <div class="row">
-                            <div class="col-12 pull-right">
-                                <p class="text-right">
-                                    <button type="submit" class="btn btn-primary">Generate</button>
-                                </p>
+                            <div class="col-12 text-right">
+                                <div @click="submit('#lamedb')" class="btn btn-primary">Generate</div>
                             </div>
                         </div>
                     </form>

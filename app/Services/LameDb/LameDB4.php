@@ -44,7 +44,12 @@ class LameDb4 extends LameDb
                 break;
             case 's':
                 $a = explode(":", trim(substr($line2,1)));
-                if (count($a)>11) {
+                if (count($a) == 11) {
+                    $a[] = 'ignored';
+                    $a[] = 'ignored';
+                    $a[] = 'ignored';
+                }
+                if (count($a)>14) {
                     throw new LameDbException("too many parameters in transponder data '$line2'");
                 }
                 @list(
@@ -58,7 +63,10 @@ class LameDb4 extends LameDb
                     $t->system,
                     $t->modulation,
                     $t->rolloff,
-                    $t->pilot
+                    $t->pilot,
+                    $t->unknown1,
+                    $t->unknown2,
+                    $t->unknown3
                     ) = $a;
                 break;
             default:

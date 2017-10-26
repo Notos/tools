@@ -18,6 +18,9 @@ class Transponder
     public $modulation;
     public $rolloff;
     public $pilot;
+    public $unknown1;
+    public $unknown2;
+    public $unknown3;
 
     protected $_mapPolarization = array(
         0=>array('H', 'Horizontal'),
